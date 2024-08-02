@@ -1,10 +1,14 @@
-const express = require('express');
 require('dotenv').config();
+
+const express = require('express');
+
 const pokemonsRoute = require('./routes/pokemonsRoute');
 const trainersRoute = require('./routes/trainersRoute');
 const rootRoute = require('./routes/rootRoute');
 
 const app = express();
+
+app.set('view engine', 'ejs');
 
 app.use('/pokemons', pokemonsRoute);
 app.use('/trainers', trainersRoute);
