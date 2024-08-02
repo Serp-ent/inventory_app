@@ -14,7 +14,7 @@ const getAllPokemons = async () => {
 
 const getAllTrainersWithPokemons = async () => {
   const { rows } = await pool.query(`
-      SELECT 
+     SELECT 
         t.id AS trainer_id, 
         t.name AS trainer_name, 
         p.name AS pokemon_name
@@ -22,8 +22,17 @@ const getAllTrainersWithPokemons = async () => {
         Trainer t
       LEFT JOIN 
         Pokemon p ON t.id = p.trainer_id
+      UNION
+      SELECT
+        NULL AS trainer_id,
+        'Wild' AS trainer_name,
+        p.name AS pokemon_name
+      FROM
+        Pokemon p
+      WHERE
+        p.trainer_id IS NULL
       ORDER BY 
-        t.name, p.name;
+        trainer_name, pokemon_name;
     `);
 
   return rows;
