@@ -29,8 +29,13 @@ const getAllTrainersWithPokemons = async () => {
   return rows;
 }
 
+const addTrainer = async (name, age) => {
+  await pool.query('INSERT INTO trainer (name, age) VALUES ($1, $2)', [name, age]);
+}
+
 module.exports = {
   getAllTrainers,
   getAllPokemons,
   getAllTrainersWithPokemons,
+  addTrainer,
 }

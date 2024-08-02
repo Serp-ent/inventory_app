@@ -15,8 +15,6 @@ const listItems = asyncHandler(async (req, res) => {
     }
   });
 
-  console.log(trainers);
-
   res.render('index', {
     title: 'Trainers list',
     trainers

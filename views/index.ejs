@@ -9,6 +9,10 @@
 
 <body>
   <h1><%= title %></h1>
+  <a href="/trainers/add">
+    <button>Add Trainer</button>
+  </a>
+
   <% for (let trainer in trainers) { %>
   <h2> <%= trainer %></h2>
   <% if (trainers[trainer].length > 0) { %>
