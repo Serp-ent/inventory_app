@@ -12,7 +12,25 @@ const getAllPokemons = async () => {
   return rows;
 }
 
+const getAllTrainersWithPokemons = async () => {
+  const { rows } = await pool.query(`
+      SELECT 
+        t.id AS trainer_id, 
+        t.name AS trainer_name, 
+        p.name AS pokemon_name
+      FROM 
+        Trainer t
+      LEFT JOIN 
+        Pokemon p ON t.id = p.trainer_id
+      ORDER BY 
+        t.name, p.name;
+    `);
+
+  return rows;
+}
+
 module.exports = {
   getAllTrainers,
   getAllPokemons,
+  getAllTrainersWithPokemons,
 }

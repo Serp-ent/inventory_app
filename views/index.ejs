@@ -4,12 +4,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title> <%= title %></title>
 </head>
 
 <body>
-  Index page
-  Listing all trainers with pokemons that belongs to them
+  <h1><%= title %></h1>
+  <% for (let trainer in trainers) { %>
+  <h2> <%= trainer %></h2>
+  <% if (trainers[trainer].length > 0) { %>
+  <ul>
+    <% trainers[trainer].forEach(pokemon => {%>
+    <li><%= pokemon %></li>
+    <% });%>
+  </ul>
+  <% } else {%>
+  <p>No pokemon</p>
+  <% } %>
+  <% } %>
 </body>
 
 </html>
