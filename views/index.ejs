@@ -8,21 +8,26 @@
 </head>
 
 <body>
-  <h1><%= title %></h1>
-  <a href="/trainers/add">
-    <button>Add Trainer</button>
-  </a>
+  <h1><%= title %>
+    <a href="/trainers/add">
+      <button>Add Trainer</button>
+    </a>
+  </h1>
 
   <% for (let trainer in trainers) { %>
-  <h2> <%= trainer %></h2>
-  <% if (trainers[trainer].length > 0) { %>
+  <h2> <%= trainer %>
+    <a href="/trainers/<%= trainers[trainer].id %>/add">
+      <button>Add Pokemon</button>
+    </a>
+  </h2>
+  <% if (trainers[trainer].pokemons.length > 0) { %>
   <ul>
-    <% trainers[trainer].forEach(pokemon => {%>
+    <% trainers[trainer].pokemons.forEach(pokemon => {%>
     <li><%= pokemon %></li>
     <% });%>
   </ul>
   <% } else {%>
-  <p>No pokemon</p>
+  <p>No pokemons </p>
   <% } %>
   <% } %>
 </body>
