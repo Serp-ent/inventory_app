@@ -1,6 +1,6 @@
 
 const listItems = (req, res) => {
-  res.send('list trainers at its pokemons');
+  res.render('index');
 }
 
 module.exports = {
