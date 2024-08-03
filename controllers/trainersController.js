@@ -46,18 +46,19 @@ const addTrainerPost = [
 
 const addPokemonToTrainerGet = asyncHandler(async (req, res) => {
   const id = req.params.id;
-  const trainerNameQuery = db.getTrainer(id).name;
+  const trainerQuery = db.getTrainer(id);
   const pokemonTypesQuery = db.getPokemonTypes();
 
-  const [trainerName, pokemonTypes] = await Promise.all([trainerNameQuery, pokemonTypesQuery]);
-  if (!trainerName) {
+  const [trainer, pokemonTypes] = await Promise.all([trainerQuery, pokemonTypesQuery]);
+
+  if (!trainer) {
     return res.status(404).send('No trainer with given id');
   }
 
+  console.log(trainer);
   res.render('addPokemon', {
-    title: 'Add pokemon to ' + trainerName,
-    trainerId: id,
-    trainerName,
+    title: 'Add pokemon to ' + trainer.name,
+    trainer,
     pokemonTypes,
   });
 });
