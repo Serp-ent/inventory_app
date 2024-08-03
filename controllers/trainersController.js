@@ -1,6 +1,7 @@
 const db = require('../db/queries');
 const asyncHandler = require('express-async-handler');
 const { body, validationResult } = require('express-validator');
+const { title } = require('process');
 
 const listTrainers = asyncHandler(async (req, res) => {
   const trainers = await db.getAllTrainers();
@@ -12,7 +13,7 @@ const listTrainers = asyncHandler(async (req, res) => {
 
 
 const addTrainerGet = (req, res) => {
-  res.render('addTrainer', { title: "Add new trainer" });
+  res.render('addTrainer', { title: "Add new trainer", trainer: null });
 };
 
 const validateTrainer = [
@@ -45,7 +46,7 @@ const addTrainerPost = [
 
 const addPokemonToTrainerGet = asyncHandler(async (req, res) => {
   const id = req.params.id;
-  const trainerNameQuery = db.getTrainerNameFromId(id);
+  const trainerNameQuery = db.getTrainer(id).name;
   const pokemonTypesQuery = db.getPokemonTypes();
 
   const [trainerName, pokemonTypes] = await Promise.all([trainerNameQuery, pokemonTypesQuery]);
@@ -76,6 +77,38 @@ const removeTrainerPost = asyncHandler(async (req, res) => {
   res.redirect('/');
 });
 
+const editTrainerGet = asyncHandler(async (req, res) => {
+  const trainer = await db.getTrainer(req.params.id);
+  console.log(trainer);
+
+  res.render('addTrainer', {
+    title: 'Update trainer' + trainer.name,
+    trainer,
+  });
+});
+
+const editTrainerPost = [
+  validateTrainer,
+  (req, res, next) => {
+    console.log('user validated');
+    next();
+  },
+  asyncHandler(async (req, res) => {
+    const { trainerName, trainerAge, } = req.body;
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.status(400).render('addTrainer', {
+        title: `Edit '${trainerName} trainer`,
+        trainer: { name: trainerName, age: trainerAge },
+        errors: errors.array(),
+      });
+    }
+
+    const trainer = await db.updateTrainer(req.params.id, trainerName, trainerAge);
+    res.redirect('/');
+  })];
+
 module.exports = {
   listTrainers,
   addTrainerPost,
@@ -83,4 +116,6 @@ module.exports = {
   addPokemonToTrainerGet,
   addPokemonToTrainerPost,
   removeTrainerPost,
+  editTrainerGet,
+  editTrainerPost,
 }

@@ -14,4 +14,7 @@ trainersRoute.post('/:id/add', controller.addPokemonToTrainerPost);
 
 trainersRoute.post('/:id/delete', controller.removeTrainerPost);
 
+trainersRoute.get('/:id/edit', controller.editTrainerGet);
+trainersRoute.post('/:id/edit', controller.editTrainerPost);
+
 module.exports = trainersRoute

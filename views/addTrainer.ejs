@@ -9,6 +9,19 @@
 
 <body>
   <%- include('./partials/errors.ejs'); %>
+  <% if (trainer) {%>
+  <form method="POST">
+    <label>
+      Trainer name:
+      <input name="trainerName" value="<%= trainer.name%>">
+    </label>
+    <label>
+      Trainer age:
+      <input name="trainerAge" value="<%= trainer.age %>">
+    </label>
+    <button type="submit">Update</button>
+  </form>
+  <% } else {%>
   <form method="POST">
     <label>
       Trainer name:
@@ -20,6 +33,7 @@
     </label>
     <button type="submit">Add</button>
   </form>
+  <%}%>
 
 </body>
 
