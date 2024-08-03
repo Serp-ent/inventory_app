@@ -29,15 +29,15 @@ const validateTrainer = [
 const addTrainerPost = [
   validateTrainer,
   asyncHandler(async (req, res) => {
+    const { trainerName, trainerAge } = req.body;
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).render('addTrainer', {
         title: "Add new trainer",
         errors: errors.array(),
+        trainer: { name: trainerName, age: trainerAge }
       });
     }
-
-    const { trainerName, trainerAge } = req.body;
     await db.addTrainer(trainerName, trainerAge);
 
     res.redirect('/');
