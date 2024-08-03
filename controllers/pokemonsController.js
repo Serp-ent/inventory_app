@@ -9,6 +9,27 @@ const listPokemons = asyncHandler(async (req, res) => {
   });
 });
 
+const addPokemonGet = asyncHandler(async (req, res) => {
+  const pokemonTypes = await db.getPokemonTypes();
+  res.render('addPokemon', {
+    title: 'Add wild pokemon',
+    pokemonTypes,
+  });
+});
+
+
+// TODO: add validation to pokemon
+const addPokemonPost = asyncHandler(async (req, res) => {
+  const wild = null;
+  const { pokemonName, pokemonType } = req.body;
+  await db.addPokemon(pokemonName, pokemonType, wild);
+
+  res.redirect('/');
+});
+
+
 module.exports = {
   listPokemons,
+  addPokemonGet,
+  addPokemonPost,
 }

@@ -29,6 +29,16 @@
     <button>Add Pokemon</button>
   </a>
   <% } %>
+
+  <h2>Wild Pokemons</h2>
+  <ul>
+    <% wildPokemons.forEach(pokemon => {%>
+    <li><%= pokemon %></li>
+    <% });%>
+  </ul>
+  <a href="/pokemons/add">
+    <button>Add wild pokemon</button>
+  </a>
 </body>
 
 </html>
