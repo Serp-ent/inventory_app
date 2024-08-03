@@ -56,6 +56,10 @@ const addPokemon = async (name, type_id, trainer_id) => {
   await pool.query("INSERT INTO pokemon (name, type_id, trainer_id) VALUES ($1, $2, $3)", [name, type_id, trainer_id]);
 }
 
+const removeTrainer = async (id) => {
+  await pool.query('DELETE FROM trainer WHERE id = $1', [id]);
+}
+
 module.exports = {
   getAllTrainers,
   getAllPokemons,
@@ -64,4 +68,5 @@ module.exports = {
   getTrainerNameFromId,
   getPokemonTypes,
   addPokemon,
+  removeTrainer,
 }

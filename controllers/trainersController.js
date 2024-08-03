@@ -71,10 +71,16 @@ const addPokemonToTrainerPost = asyncHandler(async (req, res) => {
   res.redirect('/');
 })
 
+const removeTrainerPost = asyncHandler(async (req, res) => {
+  await db.removeTrainer(req.params.id);
+  res.redirect('/');
+});
+
 module.exports = {
   listTrainers,
   addTrainerPost,
   addTrainerGet,
   addPokemonToTrainerGet,
   addPokemonToTrainerPost,
+  removeTrainerPost,
 }

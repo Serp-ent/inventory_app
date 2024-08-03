@@ -15,7 +15,13 @@
   </h1>
 
   <% for (let trainer in trainers) { %>
-  <h2> <%= trainer %> </h2>
+  <h2> <%= trainer %>
+    <!-- TODO edit -->
+    <button>Edit</button>
+    <form action="/trainers/<%= trainers[trainer].id %>/delete" method="POST">
+      <button>Delete</button>
+    </form>
+  </h2>
   <% if (trainers[trainer].pokemons.length > 0) { %>
   <ul>
     <% trainers[trainer].pokemons.forEach(pokemon => {%>
