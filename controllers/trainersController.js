@@ -11,9 +11,9 @@ const listTrainers = asyncHandler(async (req, res) => {
 });
 
 
-const addTrainerGet = asyncHandler(async (req, res) => {
+const addTrainerGet = (req, res) => {
   res.render('addTrainer', { title: "Add new trainer" });
-});
+};
 
 const validateTrainer = [
   body('trainerName').trim()
@@ -43,9 +43,38 @@ const addTrainerPost = [
   }),
 ];
 
+const addPokemonToTrainerGet = asyncHandler(async (req, res) => {
+  const id = req.params.id;
+  const trainerNameQuery = db.getTrainerNameFromId(id);
+  const pokemonTypesQuery = db.getPokemonTypes();
+
+  const [trainerName, pokemonTypes] = await Promise.all([trainerNameQuery, pokemonTypesQuery]);
+  if (!trainerName) {
+    return res.status(404).send('No trainer with given id');
+  }
+
+  res.render('addPokemon', {
+    title: 'Add pokemon to ' + trainerName,
+    trainerId: id,
+    trainerName,
+    pokemonTypes,
+  });
+});
+
+// TODO add validation
+// TODO: handle adding pokemons without trainerId (wild ones)
+const addPokemonToTrainerPost = asyncHandler(async (req, res) => {
+  const { pokemonName, pokemonType: pokemonTypeId } = req.body;
+
+  const trainerId = req.params.id;
+  await db.addPokemon(pokemonName, pokemonTypeId, trainerId);
+  res.redirect('/');
+})
 
 module.exports = {
   listTrainers,
   addTrainerPost,
   addTrainerGet,
+  addPokemonToTrainerGet,
+  addPokemonToTrainerPost,
 }

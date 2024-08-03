@@ -9,4 +9,7 @@ trainersRoute.get('/', controller.listTrainers);
 trainersRoute.get('/add', controller.addTrainerGet);
 trainersRoute.post('/add', controller.addTrainerPost);
 
+trainersRoute.get('/:id/add', controller.addPokemonToTrainerGet);
+trainersRoute.post('/:id/add', controller.addPokemonToTrainerPost);
+
 module.exports = trainersRoute

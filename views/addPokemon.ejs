@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> <%= title %> </title>
+</head>
+
+<body>
+  <h1><%= title %></h1>
+  <form method="POST">
+    <label>
+      Pokemon Name:
+      <input type="text" name="pokemonName">
+    </label>
+    <label>
+      Pokemon Type:
+      <select name="pokemonType">
+        <% pokemonTypes.forEach(type => {%>
+        <option value="<%= type.id %>"><%= type.name %></option>
+        <% }); %>
+      </select>
+    </label>
+    <input>
+    <button type="submit">Add</button>
+  </form>
+
+</body>
+
+</html>

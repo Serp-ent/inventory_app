@@ -38,8 +38,22 @@ const getAllTrainersWithPokemons = async () => {
   return rows;
 }
 
+const getTrainerNameFromId = async (id) => {
+  const result = await pool.query('SELECT name FROM trainer WHERE id = $1', [id]);
+  return result.rowCount > 0 ? result.rows[0].name : null;
+}
+
 const addTrainer = async (name, age) => {
   await pool.query('INSERT INTO trainer (name, age) VALUES ($1, $2)', [name, age]);
+}
+
+const getPokemonTypes = async () => {
+  const { rows } = await pool.query('SELECT id, name FROM type');
+  return rows;
+}
+
+const addPokemon = async (name, type_id, trainer_id) => {
+  await pool.query("INSERT INTO pokemon (name, type_id, trainer_id) VALUES ($1, $2, $3)", [name, type_id, trainer_id]);
 }
 
 module.exports = {
@@ -47,4 +61,7 @@ module.exports = {
   getAllPokemons,
   getAllTrainersWithPokemons,
   addTrainer,
+  getTrainerNameFromId,
+  getPokemonTypes,
+  addPokemon,
 }
